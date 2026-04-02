@@ -52,9 +52,9 @@ res.end("Hello world")
 
 // devDependencies are the packages that are only needed during the development phase of your project. They are listed in the package.json file under the "devDependencies" section. These packages are not required for your application to run in production, but they are useful for tasks such as testing, linting, and building your project. When someone else installs your project using npm install, the devDependencies will not be installed unless they specifically include the --dev flag.
 // only install for development purposes, not needed in production environment.
-// npm i package name --save-dev
+// npm i package name --save-dev / npm i packagename --dev
 
-## scripts - understaning default scripts and creating custom scripts
+## scripts - understaning default scripts and creating custom scriptsch
 
 // start vs test vs build vs pre and post scripts
 // npm run start vs npm start ==> npm start is a shortcut for npm run start. When you run npm start, it will look for a script named "start" in the package.json file and execute it. If you have defined a "start" script, it will run that command. If you haven't defined a "start" script, it will default to running node server.js. On the other hand, npm run start allows you to run any script defined in the package.json file by specifying the script name after "run". For example, if you have a script named "build", you can run it using npm run build.
@@ -68,3 +68,43 @@ res.end("Hello world")
 
 // npm i chalk
 // npm i concurrency
+
+(chrome engine v8 ==> node.js ==> http (module) ==> Express.js)
+
+## Express.js
+
+// Express.js is a popular web application framework for Node.js. It provides a simple and flexible way to build web applications and APIs. Express.js allows developers to handle routing, middleware, and HTTP requests and responses with ease. It is widely used for building server-side applications and is known for its minimalistic approach, making it easy to learn and use for both beginners and experienced developers. With Express.js, you can quickly create robust and scalable web applications using Node.js.
+
+// create a basic express.js server:
+
+// npm i express
+// copy and paste form npm i express documentation:
+// create a routes
+// npm i nodemon -g
+// npx nodemon server.js // nodemon server.js
+
+// Middleware
+// app.use(express.json()) // for parsing application/json
+// app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+// app.use(function(req, res, next) {
+// console.log('Time:', Date.now())
+// next()
+// })
+// app.get('/', (req, res) => {
+// res.send('Hello World!')
+// })
+
+// error handling (this is last listed route, because it will catch all the errors that are not handled by the previous routes)
+// app.use(function(err, req, res, next) {
+// console.error(err.stack)
+// res.status(500).send('Something broke!')
+// })
+
+// Setting up an Express.js server:
+
+// session or cookies
+// session is a way to store data on the server side, while cookies are a way to
+store data on the client side. Sessions are typically used to store user-specific information, such as login status or shopping cart contents, while cookies are used to store small pieces of data that can be accessed by the client, such as user preferences or tracking information. Sessions are more secure than cookies because they are stored on the server and cannot be easily tampered with by the client. However, cookies can be useful for storing non-sensitive information that needs to be accessed by the client, such as language preferences or theme settings.
+
+// cookie parse = npm i cookie-parser
+// cookie-parser is a middleware for Express.js that allows you to parse cookies in incoming HTTP requests. It provides a convenient way to access and manipulate cookies in your Express.js applications. With cookie-parser, you can easily read and write cookies, set cookie options such as expiration and path, and handle cookie-related functionality in your routes and middleware. It simplifies the process of working with cookies in Express.js and helps you manage user sessions and preferences effectively.
