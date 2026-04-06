@@ -46,25 +46,11 @@ app.post("/create", (req, res) => {
 });
 
 // open file
-app.get("/open/:filename", (req, res) => {
-  fs.readFile(`./tasks/${req.params.filename}`, (e, data) => {
-    if (e) throw error;
-    res.render("files", { data: data });
-  });
-});
+
 
 // edit file
-app.get("/edit/:filename", (req, res) => {
-  let oldname = req.params.filename;
-  res.render("edit", { oldname });
-});
 
-app.post("/rename", (req, res) => {
-  fs.rename(`./tasks/${req.body.old}`, `./tasks/${req.body.new}`, (e) => {
-    if (e) throw error;
-  });
-  res.redirect("/");
-});
+
 
 app.listen(3000, () => {
   console.log("sever is running 🏃");
