@@ -1,12 +1,14 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { userDataContext } from "../context/userContext";
 
 export default function ProfilePage() {
   const [data, setData] = useState("");
   const [error, setError] = useState("");
 
   const navigate = useNavigate();
+  const {setUserdata} = useContext(userDataContext);
 
   useEffect(() => {
     const FetchData = async () => {
@@ -21,6 +23,7 @@ export default function ProfilePage() {
         );
 
         setData(res.data);
+        setUserdata(res.data)
 
         console.log(res.data);
       } catch (error) {

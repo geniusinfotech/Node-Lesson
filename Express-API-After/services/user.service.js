@@ -19,7 +19,7 @@ module.exports.updateUser = async ({userId, username, email}) => {
   console.log(userId)
   // console.log(username)
 
-  const updateUser = await userModel.findOneAndReplace(
+  const updateUser = await userModel.findOneAndUpdate(
     {_id: userId},
     { username, email },
     { new: true },

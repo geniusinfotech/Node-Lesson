@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { userDataContext } from "../context/userContext";
@@ -8,11 +8,15 @@ export default function EditProfile() {
     username: "",
     email: "",
   });
-  const [error, setError] = useState("");
+  const [setError] = useState("");
 
   const { userdata } = useContext(userDataContext);
 
-  setFormData({ username: userdata.username, email: userdata.email });
+  useEffect(() => {
+    if (userdata) {
+      setFormData({ username: userdata.username, email: userdata.email });
+    }
+  }, [userdata]);
 
   const navigate = useNavigate();
 
@@ -40,10 +44,8 @@ export default function EditProfile() {
     }
   }
 
-
-
-  function handleChange()=>{
-    
+  function handleChange(e) {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   }
 
   return (
@@ -92,7 +94,7 @@ export default function EditProfile() {
               placeholder="Username"
               name="username"
               value={formData.username}
-              onChange={}
+              onChange={handleChange}
               className="w-full px-5 py-4 bg-white/50 border border-slate-200/60 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
             />
           </div>
@@ -102,16 +104,17 @@ export default function EditProfile() {
             <input
               type="email"
               name="email"
-              value={userdata.email}
-              onChange={(e) => {
-                setEmail(e.target.value);
-              }}
+              value={formData.email}
+              onChange={handleChange}
               placeholder="Email address"
               className="w-full px-5 py-4 bg-white/50 border border-slate-200/60 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
             />
           </div>
 
-          <button className="w-full mt-2 py-4 bg-slate-900 text-white text-sm font-semibold rounded-2xl hover:bg-slate-800 transition-all active:scale-[0.98] shadow-lg shadow-slate-200">
+          <button
+            type="submit"
+            className="w-full mt-2 py-4 bg-slate-900 text-white text-sm font-semibold rounded-2xl hover:bg-slate-800 transition-all active:scale-[0.98] shadow-lg shadow-slate-200"
+          >
             Edit Profile
           </button>
         </form>
