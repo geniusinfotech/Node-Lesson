@@ -39,4 +39,19 @@ router.post(
 // user profile
 router.get("/profile", middleware.authUser, userController.profileUser);
 
+// user logout
+router.get("/logout", middleware.authUser, userController.logoutUser);
+
+router.put(
+  "/update",
+  [
+    body("username")
+      .isLength({ min: 3 })
+      .withMessage("username must be 3 charcters long"),
+    body("email").isEmail().withMessage("Invalid Email !!"),
+  ],
+  middleware.authUser,
+  userController.updateUser,
+);
+
 module.exports = router;

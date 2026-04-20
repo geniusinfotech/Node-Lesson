@@ -1,21 +1,21 @@
+import axios from "axios";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
-import { userDataContext } from "../context/userContext";
+import { DataContext } from "../context/UserContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [err1, setErr1] = useState("");
 
+  const {setCenterData}= useContext(DataContext);
   const navigate = useNavigate();
-  const { setUserdata } = useContext(userDataContext);
 
-  const userData = { email: email, password: password };
+  // API Fetch -- Data Send
+  const SubmitForm = async () => {
+    console.log("form Submitted !!");
 
-  let submitForm = async () => {
-    console.log("Form Submitted");
+    const userData = { email: email, password: password };
 
     try {
       let response = await axios.post(
@@ -25,20 +25,16 @@ export default function LoginPage() {
 
       if (response.status === 200) {
         const data = response.data;
-console.log(data.user)
-        setUserdata(data.user);
         localStorage.setItem("token", data.token);
+        setCenterData(data.checkUser);
         navigate("/profile");
       }
 
-      setPassword("");
       setEmail("");
-    } catch (error) {
-      let err = error.response?.data?.error;
-      setError(err);
-      console.log(error.response.data.message);
-      let err1 = error.response.data.message;
-      setErr1(err1);
+      setPassword("");
+    } catch (e) {
+      let error = e.response?.data?.error;
+      setError(error);
     }
   };
 
@@ -62,7 +58,7 @@ console.log(data.user)
 
         <form
           className="space-y-5"
-          onSubmit={(e) => e.preventDefault(submitForm())}
+          onSubmit={(e) => e.preventDefault(SubmitForm())}
         >
           {error && (
             <div>
@@ -70,7 +66,7 @@ console.log(data.user)
                 return (
                   <p
                     key={index}
-                    className="bg-red-50 text-red-400 text-sm p-2 text-center rounded-xl mb-2"
+                    className="bg-red-50 rounded-xl p-2 w-full text-red-200 mb-2 text-center font-medium"
                   >
                     {val.msg}
                   </p>
@@ -78,22 +74,15 @@ console.log(data.user)
               })}
             </div>
           )}
-
-          {err1 && (
-            <p className="bg-red-50 text-red-400 text-sm p-2 text-center rounded-xl mb-2">
-              {err1}
-            </p>
-          )}
-
           <div className="space-y-1">
             <input
               type="email"
+              placeholder="Email"
               name="email"
               value={email}
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              placeholder="Email"
               className="w-full px-4 py-3 bg-white/60 border border-slate-200/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
             />
           </div>

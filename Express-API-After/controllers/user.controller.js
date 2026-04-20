@@ -54,12 +54,34 @@ module.exports.loginUser = async (req, res) => {
   }
 
   const token = await user.generateToken();
-
-  console.log(token);
+  res.cookie("token", token);
 
   res.status(200).json({ token, user });
 };
 
 module.exports.profileUser = async (req, res) => {
   res.status(200).json(req.user);
+};
+
+module.exports.logoutUser = async (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({ mesage: "User Logout Sucessfully" });
+};
+
+module.exports.updateUser = async (req, res) => {
+  const error = validationResult(req);
+
+  if(!error.isEmpty()){
+    return res.status(400).json({error: error.array()})
+  }
+
+  const userId = req.user.id; // middlware --> JWT Token
+
+  const { email, username } = req.body;
+
+  const updateUser = await userService.updateUser({ userId, username, email });
+
+  res.status(200).json({ message: "User Update Sucessfully", updateUser });
+
+  
 };

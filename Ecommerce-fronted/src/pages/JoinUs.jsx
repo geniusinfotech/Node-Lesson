@@ -1,53 +1,51 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { userDataContext } from "../context/userContext";
 
 export default function JoinUsPage() {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setusername] = useState("");
+  const [email, setemail] = useState("");
+  const [password, setpassword] = useState("");
   const [error, setError] = useState("");
 
-  const navigate = useNavigate();
-  const { setUserdata } = useContext(userDataContext);
+ const navigate = useNavigate();
 
-  async function SubmitForm() {
-    console.log("Form Submitted");
 
-    let UserData = { username: username, email: email, password: password };
+  const submitForm = async () => {
+    console.log("Form Submitted !!");
+    let userdata = { username: username, email: email, password: password };
 
     try {
       let response = await axios.post(
         `${import.meta.env.VITE_BASE_URL}/user/register`,
-        UserData,
+        userdata,
       );
-
       if (response.status === 200) {
-        const data = response.data;
+        const data = response;
 
-        setUserdata(data.user);
         localStorage.setItem("token", data.token);
-        navigate("/profile");
-      }
-    } catch (error) {
-      let err = error.response?.data?.erorr;
-      setError(err);
-      console.log(error.response?.data.erorr);
-    }
 
-    setEmail("");
-    setPassword("");
-    setUsername("");
-  }
+        navigate("/login")
+      }
+
+      setusername("");
+      setemail("");
+      setpassword("");
+    } catch (err) {
+      console.log(err.response)
+      let Err = err.response?.data?.error;
+      console.log(Err);
+      setError(Err);
+    }
+  };
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center bg-slate-50 overflow-hidden font-sans">
       {/* Parallax Wash Background */}
       <div className="absolute inset-0 z-0 pointer-events-none">
-        <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-emerald-50 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob" />
-        <div className="absolute top-[10%] right-[-5%] w-[400px] h-[400px] bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob delay-2000" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[600px] h-[600px] bg-purple-50 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob delay-4000" />
+        <div className="absolute top-[-10%] left-[-10%] w-125 h-125 bg-emerald-50 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob" />
+        <div className="absolute top-[10%] right-[-5%] w-100 h-100 bg-blue-50 rounded-full mix-blend-multiply filter blur-3xl opacity-60 animate-blob delay-2000" />
+        <div className="absolute bottom-[-10%] left-[20%] w-150 h-150 bg-purple-50 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob Fdelay-4000" />
       </div>
 
       {/* Join Us Card */}
@@ -60,31 +58,28 @@ export default function JoinUsPage() {
             Create your account to get started
           </p>
         </div>
-    
 
         <form
           className="space-y-4"
-          onSubmit={(e) => e.preventDefault(SubmitForm())}
+          onSubmit={(e) => e.preventDefault(submitForm())}
+          autoComplete="false"
         >
-          {error && <div>
-              {error.map((val, index)=>{
-                return <p key={index} className="bg-red-50 text-red-400 text-sm p-2 text-center rounded-xl mb-2">{val.msg}</p>
-              })}
-
-            </div>}
-
-
+         {error &&  <div>
+            {error.map((val, index)=>{
+              return <p key={index} className="bg-red-50 rounded-xl p-2 w-full text-red-200 mb-2 text-center font-medium">{val.msg}</p>
+            })}
+          </div>}
 
           {/* Username Field */}
           <div className="space-y-1">
             <input
               type="text"
-              placeholder="Username"
               name="username"
               value={username}
               onChange={(e) => {
-                setUsername(e.target.value);
+                setusername(e.target.value);
               }}
+              placeholder="Username"
               className="w-full px-5 py-4 bg-white/50 border border-slate-200/60 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
             />
           </div>
@@ -96,7 +91,7 @@ export default function JoinUsPage() {
               name="email"
               value={email}
               onChange={(e) => {
-                setEmail(e.target.value);
+                setemail(e.target.value);
               }}
               placeholder="Email address"
               className="w-full px-5 py-4 bg-white/50 border border-slate-200/60 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
@@ -110,7 +105,7 @@ export default function JoinUsPage() {
               name="password"
               value={password}
               onChange={(e) => {
-                setPassword(e.target.value);
+                setpassword(e.target.value);
               }}
               placeholder="Password"
               className="w-full px-5 py-4 bg-white/50 border border-slate-200/60 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"

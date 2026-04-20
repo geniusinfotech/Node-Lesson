@@ -5,13 +5,15 @@ const app = express();
 const cors = require("cors");
 const db = require("./config/db");
 const userRouter = require("./routes/v1/user.route");
+const cookieParser = require("cookie-parser");
 
 PORT = process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors({ origin: "http://localhost:3010", credentials: true }));
 app.set(db());
+app.use(cookieParser());
 
 app.get("/", (req, res) => {
   res.status(401).json({ message: "Access Denined" });

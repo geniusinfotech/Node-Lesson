@@ -36,4 +36,10 @@ router.post(
 // show profile
 router.get("/profile", middleware.authUser, userController.profile);
 
+// logout profile
+router.get("/logout", middleware.authUser, userController.logout)
+
+// update profile
+router.put("/update", middleware.authUser, userController.updateUser)
+
 module.exports = router;

@@ -6,6 +6,7 @@ const db = require("./config/db");
 const cookieParser = require("cookie-parser");
 // Route
 const userRouter = require("./routes/web/v1/user.route");
+const adminRouter = require("./routes/web/v1/admin.route")
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.set(db());
 // localhost 3002 --> req --> accept --> give response
 // localhost 3004 --> req --> cors error --> don't give response
 // in origin you mention frontend urls (deveopment, producation both)
-app.use(cors({ origin: "https://localhost:3002", credentials: true }));
+app.use(cors({ origin: "http://localhost:3002", credentials: true }));
 
 PORT = process.env.PORT;
 
@@ -27,6 +28,8 @@ app.get("/", (req, res) => {
   res.status(401).json({ message: "Access Denined !!" });
 });
 app.use("/user", userRouter); // --> localhost:3005/user/register
+app.use("/admin", adminRouter); // --> url/admin/all/user
+
 
 app.listen(PORT, () => {
   console.log(`✅ server is Running on PORT ${PORT}`);

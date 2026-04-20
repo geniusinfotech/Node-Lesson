@@ -1,10 +1,9 @@
-import React from "react";
-import LoginPage from "./pages/login";
 import { Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import JoinUsPage from "./pages/JoinUs";
-import ProfilePage from "./pages/profile";
-import EditProfile from "./pages/Edit";
+import LoginPage from "./pages/Login";
+import JoinUsPage from "./pages/joinus";
+import ProfilePage from "./pages/Profile";
+import EditProfile from "./pages/EditProfile";
 
 const App = () => {
   return (
@@ -14,7 +13,7 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/joinus" element={<JoinUsPage />} />
         <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/editprofile" element={<EditProfile />} />
+        <Route path="/edit-profile" element={<EditProfile />} />
       </Routes>
     </>
   );

@@ -1,5 +1,5 @@
 const userService = require("../services/user.service");
-const {                      } = require("express-validator");
+const { validationResult } = require("express-validator");
 const userModel = require("../models/user.model");
 
 module.exports.registerUser = async (req, res) => {
@@ -9,7 +9,7 @@ module.exports.registerUser = async (req, res) => {
     return res.status(400).json({ error: error.array() });
   }
 
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
 
   // check user is already registed or not
   let isExist = await userModel.findOne({ email: email });
@@ -24,6 +24,7 @@ module.exports.registerUser = async (req, res) => {
     username,
     email,
     password: hashPassword,
+    role
   });
 
   let token = await user.generateAuthToken();
@@ -60,4 +61,20 @@ module.exports.loginUser = async (req, res) => {
 
 module.exports.profile = (req, res) => {
   res.status(200).json({ user: req.user });
+};
+
+module.exports.logout = (req, res) => {
+  res.clearCookie("token");
+  res.status(200).json({ message: "User logout Successfully !!" });
+};
+
+module.exports.updateUser = async (req, res) => {
+  const userId = req.user.id;
+  console.log(userId);
+
+  const { username, email } = req.body;
+
+  const updateUser = await userService.updateUser({ userId, username, email });
+
+  res.status(200).json({ message: "User Data Updated Successfully,", updateUser });
 };
