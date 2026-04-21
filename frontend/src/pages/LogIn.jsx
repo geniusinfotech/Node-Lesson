@@ -1,10 +1,23 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
+  const [formData, setformData] = useState({
+    email: "",
+    password: "",
+  });
+  const [error, setError] = useState("");
+
+  const submitForm = () => {
+    console.log("Submit Form");
+  };
+
+  const handleChange = (e) => {
+    setformData({ ...formData, [e.target.name]: e.target.value });
+  };
+
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center bg-slate-50 overflow-hidden">
-
       {/* Background Wash Parallax */}
       <div className="absolute inset-0 z-0 pointer-events-none">
         <div className="absolute top-0 -left-20 w-96 h-96 bg-blue-100 rounded-full mix-blend-multiply filter blur-3xl opacity-50 animate-blob" />
@@ -15,15 +28,26 @@ export default function LoginPage() {
       {/* Login Card */}
       <div className="relative z-10 w-full max-w-sm p-8 mx-4 bg-white/40 backdrop-blur-2xl border border-white/50 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
         <div className="text-center mb-10">
-          <h1 className="text-2xl font-light tracking-tight text-slate-900">Welcome</h1>
+          <h1 className="text-2xl font-light tracking-tight text-slate-900">
+            Welcome
+          </h1>
           <p className="text-sm text-slate-500 mt-1">Sign in to your account</p>
         </div>
 
-        <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="space-y-5"
+          onSubmit={(e) => {
+            e.preventDefault();
+            submitForm();
+          }}
+        >
           <div className="space-y-1">
             <input
               type="email"
               placeholder="Email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
               className="w-full px-4 py-3 bg-white/60 border border-slate-200/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
             />
           </div>
@@ -32,6 +56,9 @@ export default function LoginPage() {
             <input
               type="password"
               placeholder="Password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
               className="w-full px-4 py-3 bg-white/60 border border-slate-200/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
             />
           </div>
@@ -42,12 +69,21 @@ export default function LoginPage() {
         </form>
 
         <div className="mt-8 flex flex-col items-center gap-3">
-          <a href="#" className="text-xs text-slate-400 hover:text-slate-600 transition-colors">
+          <a
+            href="#"
+            className="text-xs text-slate-400 hover:text-slate-600 transition-colors"
+          >
             Forgot password?
           </a>
           <div className="h-px w-8 bg-slate-200"></div>
           <p className="text-xs text-slate-500">
-            Don't have an account? <Link to="/joinus" className="text-slate-900 font-medium hover:underline">Join us</Link>
+            Don't have an account?{" "}
+            <Link
+              to="/joinus"
+              className="text-slate-900 font-medium hover:underline"
+            >
+              Join us
+            </Link>
           </p>
         </div>
       </div>

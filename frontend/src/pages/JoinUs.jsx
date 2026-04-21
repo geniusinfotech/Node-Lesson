@@ -1,14 +1,40 @@
+import axios from "axios";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function JoinUsPage() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [exist, setExist] = useState("");
 
-  const SubmitForm = () =>{
-    console.log("")
-  }
+  const navigate = useNavigate();
+
+  const SubmitForm = async () => {
+    const userData = { username: username, email: email, password: password };
+
+    try {
+      let response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/user/register`,
+        userData,
+      );
+
+      if (response.status === 200) {
+        const data = response;
+        localStorage.setItem("token", data.token);
+
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.log(error.response);
+      let Err = error.response?.data?.error;
+      setError(Err);
+
+      let Err2 = error.response?.data?.message;
+      setExist(Err2);
+    }
+  };
 
   return (
     <div className="relative min-h-screen w-full flex items-center justify-center bg-slate-50 overflow-hidden font-sans">
@@ -30,12 +56,41 @@ export default function JoinUsPage() {
           </p>
         </div>
 
-        <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
+        <form
+          className="space-y-4"
+          onSubmit={(e) => {
+            e.preventDefault();
+            SubmitForm();
+          }}
+        >
+          {error && (
+            <div>
+              {error.map((val) => {
+                return (
+                  <p className="text-red-400 bg-red-50 mb-2 p-2 rounded-xl text-sm">
+                    {val.msg}
+                  </p>
+                );
+              })}
+            </div>
+          )}
+
+          {exist && (
+            <p className="text-red-400 font-medium bg-red-50 rounded-xl p-2">
+              {exist}
+            </p>
+          )}
+
           {/* Username Field */}
           <div className="space-y-1">
             <input
               type="text"
               placeholder="Username"
+              name="username"
+              value={username}
+              onChange={(e) => {
+                setUsername(e.target.value);
+              }}
               className="w-full px-5 py-4 bg-white/50 border border-slate-200/60 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
             />
           </div>
@@ -45,6 +100,11 @@ export default function JoinUsPage() {
             <input
               type="email"
               placeholder="Email address"
+              name="email"
+              value={email}
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
               className="w-full px-5 py-4 bg-white/50 border border-slate-200/60 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
             />
           </div>
@@ -54,6 +114,11 @@ export default function JoinUsPage() {
             <input
               type="password"
               placeholder="Password"
+              name="password"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
               className="w-full px-5 py-4 bg-white/50 border border-slate-200/60 rounded-2xl focus:outline-none focus:ring-2 focus:ring-slate-200 focus:bg-white transition-all placeholder:text-slate-400 text-sm"
             />
           </div>

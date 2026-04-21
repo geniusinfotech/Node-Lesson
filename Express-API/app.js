@@ -6,7 +6,8 @@ const db = require("./config/db");
 const cookieParser = require("cookie-parser");
 // Route
 const userRouter = require("./routes/web/v1/user.route");
-const adminRouter = require("./routes/web/v1/admin.route")
+const adminRouter = require("./routes/web/v1/admin.route");
+const productRouter = require("./routes/web/v1/product.route");
 
 const app = express();
 
@@ -27,9 +28,9 @@ PORT = process.env.PORT;
 app.get("/", (req, res) => {
   res.status(401).json({ message: "Access Denined !!" });
 });
-app.use("/user", userRouter); // --> localhost:3005/user/register
-app.use("/admin", adminRouter); // --> url/admin/all/user
-
+app.use("/user", userRouter);
+app.use("/admin", adminRouter);
+app.use("/product", productRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ server is Running on PORT ${PORT}`);

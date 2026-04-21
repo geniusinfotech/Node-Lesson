@@ -38,3 +38,18 @@ Response ←──────────────────────�
 9. MongoDB saves the document
    ↓
 10. Controller sends: 201 { success: true, data: { ... }, message: "Product created" }
+
+
+## Tasks:
+1. show all user 
+2. delete user
+3. add product
+4. update product
+5. delete product
+6. hide product
+7. create manager
+8. update manager
+9. chatbot
+10. manage manager activity
+11. forget password
+12. special offers

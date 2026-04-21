@@ -14,8 +14,7 @@ module.exports.createUser = async ({ username, email, password, role }) => {
 
 // update user
 module.exports.updateUser = async ({userId, username, email}) => {
-  
-  
+
   console.log(userId)
   // console.log(username)
 

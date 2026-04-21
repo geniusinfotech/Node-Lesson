@@ -5,6 +5,8 @@ const app = express();
 const cors = require("cors");
 const db = require("./config/db");
 const userRouter = require("./routes/v1/user.route");
+const adminRouter = require("./routes/v1/admin.route")
+const productRouter = require("./routes/v1/product.route")
 const cookieParser = require("cookie-parser");
 
 PORT = process.env.PORT;
@@ -19,6 +21,9 @@ app.get("/", (req, res) => {
   res.status(401).json({ message: "Access Denined" });
 });
 app.use("/user", userRouter); // localhost:3005/user/register
+app.use("/admin", adminRouter);
+app.use("/product", productRouter)
+
 
 app.listen(PORT, () => {
   console.log(`✅ server is Runing ${PORT}`);
