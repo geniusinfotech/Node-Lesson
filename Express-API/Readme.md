@@ -39,9 +39,9 @@ Response ←──────────────────────�
 
 
 ## APi Created
-1. user register --> post --> username, password, email
-2. user login --> post --> email, password
-3. user profile --> get
+1. user register --> post --> username, password, email ✅
+2. user login --> post --> email, password ✅
+3. user profile --> get  ✅
 
 
 ## APIs Creation:
@@ -50,15 +50,15 @@ Response ←──────────────────────�
 - change password
 
 
-- add cart
-- add whishlist
-- my orders
+- add cart 
+- add whishlist 
+- my orders 
 
 # Admin:
-- product creation
-- product read single and all
-- product update
-- product delete
+- product creation ✅
+- product read single and all ✅
+- product update ✅
+- product delete ✅
 
 - order tracking
 - Stock Management 

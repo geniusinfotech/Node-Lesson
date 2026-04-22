@@ -5,13 +5,18 @@ dotenv.config();
 const express = require("express");
 const db = require("./config/db");
 const cors = require("cors");
+const cookieParser = require("cookie-parser")
+
+// Router
 const userRouter = require("./routes/web/user.route");
+const adminRouter = require("./routes/web/admin.route")
 
 const app = express();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 db();
+app.use(cookieParser());
 
 // cors origin --> allow only that website or port that mention into origin grop. backend only response when localhost 3002 send request other than give cors origin error
 
@@ -26,7 +31,8 @@ PORT = process.env.PORT;
 app.get("/", (req, res) => {
   res.send("server's Homepage");
 });
-app.use("/user", userRouter); // 1. localhost:3005/user/register
+app.use("/user", userRouter); 
+app.use("/profile", adminRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ Server is Running on PORT ${PORT}`);

@@ -9,7 +9,7 @@ module.exports.registerUser = async (req, res) => {
     return res.status(400).json({ error: error.array() });
   }
 
-  const { username, email, password } = req.body;
+  const { username, email, password, role } = req.body;
 
   // check user is already register or available database
   let isExist = await userModel.findOne({ email: email });
@@ -24,6 +24,7 @@ module.exports.registerUser = async (req, res) => {
     username,
     email,
     password: hashPassword,
+    role
   });
 
   let token = await user.generateAuthToken();
@@ -53,10 +54,32 @@ module.exports.loginUser = async (req, res) => {
   }
 
   const token = checkUser.generateAuthToken();
+  res.cookie("token", token);
 
   res.status(200).json({ token, checkUser });
 };
 
 module.exports.profileUser = async (req, res) => {
   res.status(200).json({ user: req.user });
+};
+
+// update user
+module.exports.updateProfile = async (req, res) => {
+  const userId = req.user.id;
+
+  const { username, email } = req.body;
+
+  const user = await userService.updateUser({ userId, username, email });
+
+  if (!user) {
+    return res.status(404).json({ message: "User not Found" });
+  }
+
+  return res.status(200).json({ message: "User updated Successfully", user });
+};
+
+// logoutz
+module.exports.logoutProfile = async (req, res) => {
+  res.clearCookie();
+  return res.status(200).json({ message: "user logout sucessfully" });
 };

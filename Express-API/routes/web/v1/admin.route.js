@@ -3,6 +3,7 @@ const router = express.Router();
 const middleware = require("../../../middlewares/admin.middleware");
 const usermiddleware = require("../../../middlewares/user.middleware");
 const adminController = require("../../../controllers/admin.controller");
+const { body } = require("express-validator");
 
 // show all users
 // login user --> check user is Admin? --> show all users
@@ -19,6 +20,23 @@ router.delete(
   usermiddleware.authUser,
   middleware.authAdmin,
   adminController.deleteUser,
+);
+
+// Manager Creation
+router.post(
+  "/manager/create",
+  [
+    body("username")
+      .isLength({ min: 4 })
+      .withMessage("username must be 4 characters long"),
+    body("email").isEmail().withMessage("Enter Vaild Email"),
+    body("password")
+      .isLength({ min: 6 })
+      .withMessage("Password must be 6 characters long"),
+  ],
+  usermiddleware.authUser,
+  middleware.authAdmin,
+  adminController.registerManager,
 );
 
 module.exports = router;

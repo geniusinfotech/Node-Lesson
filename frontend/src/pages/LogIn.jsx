@@ -1,5 +1,6 @@
+import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function LoginPage() {
   const [formData, setformData] = useState({
@@ -7,13 +8,32 @@ export default function LoginPage() {
     password: "",
   });
   const [error, setError] = useState("");
+  const [validation, setValidation] = useState("");
 
-  const submitForm = () => {
-    console.log("Submit Form");
-  };
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setformData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const submitForm = async () => {
+    try {
+      let response = await axios.post(
+        `${import.meta.env.VITE_BASE_URL}/user/login`,
+        formData,
+      );
+
+      if (response.status === 200) {
+        let data = response.data;
+        localStorage.setItem("token", data.token);
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.log(error.response);
+      setError(error.response?.data?.message);
+      setValidation(error.response?.data?.error);
+      console.log(error.response?.data?.error);
+    }
   };
 
   return (
@@ -41,6 +61,27 @@ export default function LoginPage() {
             submitForm();
           }}
         >
+          {error && (
+            <p className="text-red-400 bg-red-50 p-2 mb-1 rounded-xl">
+              {error}
+            </p>
+          )}
+
+          {validation && (
+            <div>
+              {validation.map((val, index) => {
+                return (
+                  <p
+                    key={index}
+                    className="text-red-400 bg-red-50 p-2 mb-1 rounded-xl"
+                  >
+                    {val.msg}
+                  </p>
+                );
+              })}
+            </div>
+          )}
+
           <div className="space-y-1">
             <input
               type="email"

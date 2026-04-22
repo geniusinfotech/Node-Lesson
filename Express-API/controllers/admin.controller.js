@@ -1,28 +1,60 @@
 const userModel = require("../models/user.model");
-const adminService = require ("../services/admin.service");
+const adminService = require("../services/admin.service");
+const { validationResult } = require("express-validator");
 
-module.exports.AllUser = async (req, res)=>{
-    try {
-        const users = await adminService.getAllUser();
-        
-        return res.status(200).json({message: "User Fetch Sucessfully", users})
-    } catch (error) {
-        return res.status(400).json({error: error.message})
+// get all user
+module.exports.AllUser = async (req, res) => {
+  try {
+    const users = await adminService.getAllUser();
+
+    return res.status(200).json({ message: "User Fetch Sucessfully", users });
+  } catch (error) {
+    return res.status(400).json({ error: error.message });
+  }
+};
+
+// delete user
+module.exports.deleteUser = async (req, res) => {
+  try {
+    const user = await adminService.deleteUser(req.params.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not Find" });
     }
-}
 
-module.exports.deleteUser = async (req, res) =>{
-    try {
-        const user = await adminService.deleteUser(req.params.id);
+    return res.status(200).json({ message: "User Delete Successfully" });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+};
 
-        if(!user){
-            return res.status(404).json({message: "User not Find"})
-        }
+// create manager
+module.exports.registerManager = async (req, res) => {
+  const error = validationResult(req);
 
-        return res.status(200).json({message: "User Delete Successfully"})
+  if (!error.isEmpty()) {
+    return res.status(400).json({ error: error.array() });
+  }
 
+  const { username, email, password, role } = req.body;
 
-    } catch (error) {
-    return res.status(400).json({message: error.message})
-    }
-}
+  // check user is already registed or not
+  let isExist = await userModel.findOne({ email: email });
+
+  if (isExist) {
+    return res.status(400).json({ message: "user is already register" });
+  }
+
+  const hashPassword = await userModel.hashPassword(password);
+
+  const user = await adminService.createManager({
+    username,
+    email,
+    password: hashPassword,
+    role,
+  });
+
+  let token = await user.generateAuthToken();
+
+  res.status(200).json({ token, user });
+};

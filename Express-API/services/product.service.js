@@ -91,3 +91,8 @@ module.exports.updateProduct = async ({
 
   return updatedProduct;
 };
+
+// delete product
+module.exports.deleteProduct = async (id) => {
+  return await productModel.findOneAndDelete({ _id: id });
+};

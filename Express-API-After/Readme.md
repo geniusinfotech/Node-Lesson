@@ -41,14 +41,18 @@ Response ←──────────────────────�
 
 
 ## Tasks:
-1. show all user 
-2. delete user
-3. add product
-4. update product
-5. delete product
-6. hide product
-7. create manager
-8. update manager
+1. show all user ✅
+2. delete user ✅
+3. add product ✅
+4. update product ✅
+5. delete product ✅
+
+6. hide product 
+
+
+7. create manager 
+8. update manager 
+
 9. chatbot
 10. manage manager activity
 11. forget password

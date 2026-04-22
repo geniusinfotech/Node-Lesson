@@ -1,17 +1,30 @@
-// show all user logic
+const userModel = require("../models/user.model");
 
-const userModel = require("../models/user.model")
+// get all user
+module.exports.getAllUser = async () => {
+  const allUser = await userModel.find();
 
+  return allUser;
+};
 
-module.exports.getAllUser = async ()=>{
- const allUser = await userModel.find();
+// delete user
+module.exports.deleteUser = async (id) => {
+  const user = await userModel.findOneAndDelete({ _id: id });
 
- return allUser;
-}
+  return user;
+};
 
+module.exports.createManager = async ({ username, email, password, role }) => {
+  if (!username || !email || !password) {
+    throw new Error("All Filed Are Required");
+  }
 
-module.exports.deleteUser = async (id) =>{
-    const user = await userModel.findOneAndDelete({_id: id})
+  const user = await userModel.create({
+    username,
+    email,
+    password,
+    role: "manager",
+  });
 
-    return user;
-}
+  return user;
+};

@@ -34,10 +34,12 @@ let ProductSchema = mongoose.Schema(
       minLength: 0,
       reuired: true,
     },
-    image: {
-      type: String,
-      reuired: true,
-    },
+    image: [
+      {
+        type: String,
+        reuired: true,
+      },
+    ],
     sku: {
       type: String,
       unique: true,
