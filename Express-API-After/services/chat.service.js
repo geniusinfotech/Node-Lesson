@@ -47,12 +47,9 @@ module.exports.BotReply = async (message) => {
   try {
     // if (process.env.OPENAI_API_KEY) {
     // }
-    console.log("ai is working", message);
     return await getAIreply(message);
     // return getStaticReply(message);
   } catch (error) {
-    console.log("ai bot not working");
-    return error;
-    // return getStaticReply(message);
+    return getStaticReply(message);
   }
 };

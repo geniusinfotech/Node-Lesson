@@ -5,11 +5,11 @@ dotenv.config();
 const express = require("express");
 const db = require("./config/db");
 const cors = require("cors");
-const cookieParser = require("cookie-parser")
+const cookieParser = require("cookie-parser");
 
 // Router
 const userRouter = require("./routes/web/user.route");
-const adminRouter = require("./routes/web/admin.route")
+const adminRouter = require("./routes/web/admin.route");
 
 const app = express();
 
@@ -31,8 +31,8 @@ PORT = process.env.PORT;
 app.get("/", (req, res) => {
   res.send("server's Homepage");
 });
-app.use("/user", userRouter); 
-app.use("/profile", adminRouter);
+app.use("/user", userRouter);
+app.use("/admin", adminRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ Server is Running on PORT ${PORT}`);

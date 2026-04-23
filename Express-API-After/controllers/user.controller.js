@@ -71,8 +71,8 @@ module.exports.logoutUser = async (req, res) => {
 module.exports.updateUser = async (req, res) => {
   const error = validationResult(req);
 
-  if(!error.isEmpty()){
-    return res.status(400).json({error: error.array()})
+  if (!error.isEmpty()) {
+    return res.status(400).json({ error: error.array() });
   }
 
   const userId = req.user.id; // middlware --> JWT Token
@@ -82,6 +82,30 @@ module.exports.updateUser = async (req, res) => {
   const updateUser = await userService.updateUser({ userId, username, email });
 
   res.status(200).json({ message: "User Update Sucessfully", updateUser });
+};
 
-  
+module.exports.ForgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    const message = await userService.forgetPassword(email);
+
+    res.status(200).json({ message: "Email Send to User Mail", message });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+module.exports.ResetPassword = async (req, res) => {
+  try {
+    const token = req.params.token;
+    const { newPassword } = req.body;
+
+    const message = await userService.ResetPassword({ token, newPassword });
+
+    return res.status(200).json({ message });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 };
