@@ -22,21 +22,13 @@ router.delete(
   adminController.deleteUser,
 );
 
-// Manager Creation
-router.post(
-  "/manager/create",
-  [
-    body("username")
-      .isLength({ min: 4 })
-      .withMessage("username must be 4 characters long"),
-    body("email").isEmail().withMessage("Enter Vaild Email"),
-    body("password")
-      .isLength({ min: 6 })
-      .withMessage("Password must be 6 characters long"),
-  ],
+// update role -- create manager
+// router -- service -- controller -- call into router
+router.put(
+  "/user/:id/role",
   usermiddleware.authUser,
   middleware.authAdmin,
-  adminController.registerManager,
+  adminController.updateUserRole,
 );
 
 module.exports = router;

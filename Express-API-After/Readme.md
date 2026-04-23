@@ -50,10 +50,12 @@ Response ←──────────────────────�
 6. hide product 
 
 
-7. create manager 
-8. update manager 
+7. create manager ✅
+8. update manager   ✅
 
-9. chatbot
+9. chatbot 
+(chatbot: router --> service --> controller)
+
 10. manage manager activity
 11. forget password
 12. special offers

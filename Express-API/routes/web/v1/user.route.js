@@ -42,4 +42,7 @@ router.get("/logout", middleware.authUser, userController.logout)
 // update profile
 router.put("/update", middleware.authUser, userController.updateUser)
 
+// forget password
+router.post("/forget-password", middleware.authUser)
+
 module.exports = router;

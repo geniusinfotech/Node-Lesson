@@ -47,7 +47,7 @@ Response ←──────────────────────�
 ## APIs Creation:
 # User:
 - forget password
-- change password
+- reset password
 
 
 - add cart 
@@ -64,9 +64,9 @@ Response ←──────────────────────�
 - Stock Management 
 - Invoice Generate
 - notification
-- chatbot
+- chatbot ✅
 
-- create manager
+- create manager ✅
 - manage manager rights
 
 

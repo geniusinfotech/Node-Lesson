@@ -4,9 +4,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const db = require("./config/db");
+
+
+// Router
 const userRouter = require("./routes/v1/user.route");
 const adminRouter = require("./routes/v1/admin.route")
 const productRouter = require("./routes/v1/product.route")
+const chatRouter = require("./routes/v1/chat.route")
+
 const cookieParser = require("cookie-parser");
 
 PORT = process.env.PORT;
@@ -23,7 +28,7 @@ app.get("/", (req, res) => {
 app.use("/user", userRouter); // localhost:3005/user/register
 app.use("/admin", adminRouter);
 app.use("/product", productRouter)
-
+app.use("/bot", chatRouter)
 
 app.listen(PORT, () => {
   console.log(`✅ server is Runing ${PORT}`);
