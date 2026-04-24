@@ -66,7 +66,6 @@ module.exports.getAllProduct = async (req, res) => {
       .status(200)
       .json({ message: "Fecth All Product Sucessfully !!", products });
   } catch (error) {
-    console.log(error)
     return res.status(400).json({ error: error.message });
   }
 };

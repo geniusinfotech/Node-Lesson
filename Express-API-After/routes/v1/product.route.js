@@ -15,8 +15,6 @@ router.post(
 // read all product
 router.get(
   "/all",
-  userMiddleware.authUser,
-  adminMiddleware.authAdmin,
   productController.getAllProduct,
 );
 
@@ -24,8 +22,6 @@ router.get(
 // read single product
 router.get(
   "/:id",
-  userMiddleware.authUser,
-  adminMiddleware.authAdmin,
   productController.singleProduct,
 );
 

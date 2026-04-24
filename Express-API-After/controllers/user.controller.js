@@ -41,7 +41,6 @@ module.exports.loginUser = async (req, res) => {
 
   const user = await userModel.findOne({ email }).select("+password");
 
-  console.log(user);
 
   if (!user) {
     return res.status(404).json({ message: "User not Found" });
@@ -92,7 +91,6 @@ module.exports.ForgetPassword = async (req, res) => {
 
     res.status(200).json({ message: "Email Send to User Mail", message });
   } catch (error) {
-    console.log(error);
     return res.status(400).json({ message: error.message });
   }
 };

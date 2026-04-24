@@ -12,7 +12,6 @@ module.exports.chatBot = async (req, res) => {
 
     return res.status(200).json({ reply });
   } catch (error) {
-    console.log(error)
     return res.status(400).json({ message: error.message });
   }
 };

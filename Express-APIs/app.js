@@ -10,6 +10,7 @@ const cookieParser = require("cookie-parser");
 // Router
 const userRouter = require("./routes/web/user.route");
 const adminRouter = require("./routes/web/admin.route");
+const productRouter = require("./routes/web/product.route");
 
 const app = express();
 
@@ -33,6 +34,7 @@ app.get("/", (req, res) => {
 });
 app.use("/user", userRouter);
 app.use("/admin", adminRouter);
+app.use("/product", productRouter);
 
 app.listen(PORT, () => {
   console.log(`✅ Server is Running on PORT ${PORT}`);
