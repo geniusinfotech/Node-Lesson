@@ -23,7 +23,6 @@ router.post(
 router.get(
   "/all",
   userMiddleware.authUser,
-  adminMiddleware.authAdmin,
   productController.allProduct,
 );
 
@@ -31,7 +30,6 @@ router.get(
 router.get(
   "/:id",
   userMiddleware.authUser,
-  adminMiddleware.authAdmin,
   productController.singleProduct,
 );
 

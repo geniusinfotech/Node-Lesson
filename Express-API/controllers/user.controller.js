@@ -24,7 +24,7 @@ module.exports.registerUser = async (req, res) => {
     username,
     email,
     password: hashPassword,
-    role
+    role,
   });
 
   let token = await user.generateAuthToken();
@@ -76,5 +76,37 @@ module.exports.updateUser = async (req, res) => {
 
   const updateUser = await userService.updateUser({ userId, username, email });
 
-  res.status(200).json({ message: "User Data Updated Successfully,", updateUser });
+  res
+    .status(200)
+    .json({ message: "User Data Updated Successfully,", updateUser });
+};
+
+// forget password --> send email for reset password
+module.exports.forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    await userService.forgetPassword(email);
+
+    return res.status(200).json({
+      message: "Email Send your Registed Mail Sucessfully. Check Your Mail",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: error.message });
+  }
+};
+
+// reset Password
+module.exports.resetPassword = async (req, res) => {
+  try {
+    const token = req.params.token;
+    const { newPassword } = req.body;
+
+    await userService.resetPassword({ token, newPassword });
+
+    return res.status(200).json({ message: "Password Reset Successfully " });
+  } catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
 };
