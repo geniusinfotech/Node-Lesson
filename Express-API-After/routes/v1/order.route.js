@@ -7,4 +7,6 @@ const orderController = require("../../controllers/order.controller");
 // create order
 router.post("/add", userMiddleware.authUser, orderController.PlaceOrder);
 
+// get all order
+
 module.exports = router;
