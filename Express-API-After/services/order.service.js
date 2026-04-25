@@ -9,7 +9,7 @@ module.exports.PlaceOrder = async ({userId, items}) => {
   for (let item of items) {
     const productId = item.productId
     const product = await productModel.findOne({_id: productId});
-
+  
     if (!product) {
       throw new Error("product not found");
     }

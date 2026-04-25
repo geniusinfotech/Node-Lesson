@@ -101,7 +101,7 @@ module.exports.updateProduct = async (req, res) => {
 
   return res
     .status(200)
-    .json({ message: "User Update Sucessfully", updatedProduct });
+    .json({ message: "User Update Sucessfully", updatedProduct });     
 };
 
 // delete product
