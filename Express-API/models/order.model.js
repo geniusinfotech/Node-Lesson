@@ -6,7 +6,7 @@ let OrderSchema = mongoose.Schema({
     ref: "user",
   },
   items: [
-    { productId: String, qauntity: Number, price: Number, total: Number },
+    { productId: String, quantity: Number, price: Number, total: Number },
   ],
   totalbill: {
     type: Number,
@@ -19,4 +19,3 @@ let OrderSchema = mongoose.Schema({
 });
 
 module.exports = mongoose.model("order", OrderSchema);
- 

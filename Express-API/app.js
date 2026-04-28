@@ -10,6 +10,8 @@ const adminRouter = require("./routes/web/v1/admin.route");
 const productRouter = require("./routes/web/v1/product.route");
 const chatRouter = require("./routes/web/v1/chat.route");
 const cartRouter = require("./routes/web/v1/cart.route");
+const orderRouter = require("./routes/web/v1/order.route");
+const wishlistRouter = require("./routes/web/v1/wishlist.route");
 
 const app = express();
 
@@ -35,7 +37,8 @@ app.use("/admin", adminRouter);
 app.use("/product", productRouter);
 app.use("/bot", chatRouter);
 app.use("/cart", cartRouter);
-
+app.use("/order", orderRouter);
+app.use("/wishlist", wishlistRouter)
 
 app.listen(PORT, () => {
   console.log(`✅ server is Running on PORT ${PORT}`);

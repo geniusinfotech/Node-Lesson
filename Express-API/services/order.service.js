@@ -1,24 +1,23 @@
 const orderModel = require("../models/order.model");
 const productModel = require("../models/product.model");
 
-module.exports.PlaceOrder = async ({ userId, items }) => {
+
+// create order
+module.exports.CreateOrder = async ({ userId, items }) => {
   let totalAmount = 0;
 
-  const orderItems = [];
+  let orderItems = [];
 
   for (let item of items) {
+    console.log(item);
     const productId = item.productId;
     const product = await productModel.findOne({ _id: productId });
 
-    if (!product) {
-      throw new Error("product not found");
-    }
+    if (!product) throw new Error("Product Not Found");
 
     const itemsTotal = product.price * item.quantity;
 
     totalAmount += itemsTotal;
-    
-
 
     orderItems.push({
       productId: product._id,
@@ -28,14 +27,14 @@ module.exports.PlaceOrder = async ({ userId, items }) => {
     });
   }
 
-
   return await orderModel.create({
     userId,
     items: orderItems,
-    total: totalAmount,
+    totalbill: totalAmount,
   });
 };
 
-module.exports.getOrder = async (userId) => {
-  return await orderModel.findOne({ userId });
-};
+// get order history or show order
+module.exports.GetOrder = async(userId)=>{
+    return await orderModel.findOne({userId});
+}

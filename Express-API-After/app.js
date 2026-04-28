@@ -12,6 +12,7 @@ const productRouter = require("./routes/v1/product.route");
 const chatRouter = require("./routes/v1/chat.route");
 const cartRouter = require("./routes/v1/cart.route");
 const orderRouter = require("./routes/v1/order.route");
+const wishlistRouter = require("./routes/v1/wishlist.route");
 
 const cookieParser = require("cookie-parser");
 
@@ -32,6 +33,7 @@ app.use("/product", productRouter);
 app.use("/bot", chatRouter);
 app.use("/cart", cartRouter);
 app.use("/order", orderRouter);
+app.use("/wishlist", wishlistRouter)
 
 app.listen(PORT, () => {
   console.log(`✅ server is Runing ${PORT}`);
